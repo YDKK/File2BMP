@@ -16,9 +16,9 @@ namespace File2BMP
         struct BitmapFileHeader
         {
             public ushort bfType;
-            public uint bfSize;
-            public ushort bfReserved1;
-            public ushort bfReserved2;
+            public ulong bfSize;
+            //public ushort bfReserved1;
+            //public ushort bfReserved2;
             public uint bfOffBits;
         }
 
@@ -77,13 +77,13 @@ namespace File2BMP
                     using (var src = new FileStream(filename, FileMode.Open))
                     {
                         src.Seek(2, SeekOrigin.Begin);
-                        var buffer = new byte[4];
-                        src.Read(buffer, 0, 4);
-                        var size = BitConverter.ToUInt32(buffer, 0);
+                        var buffer = new byte[8];
+                        src.Read(buffer, 0, 8);
+                        var size = BitConverter.ToUInt64(buffer, 0);
 
                         src.Seek(54, SeekOrigin.Begin);
                         src.CopyTo(fs);
-                        fs.SetLength(size);
+                        fs.SetLength((long)size);
                         fs.Flush();
                     }
                 }
@@ -97,7 +97,7 @@ namespace File2BMP
                     using (var fs = new FileStream(Environment.CurrentDirectory + "/" + fi.Name + ".bmp", FileMode.Create))
                     using (var src = new FileStream(filename, FileMode.Open, FileAccess.Read))
                     {
-                        fs.Write(MakeBitmapFileHeader((uint)fileSize), 0, 14);
+                        fs.Write(MakeBitmapFileHeader((ulong)fileSize), 0, 14);
                         fs.Write(MakeBitmapInfoHeader(width, height, bytesPerPixel * 8), 0, 40);
                         fs.Flush();
                         src.CopyTo(fs);
@@ -112,14 +112,14 @@ namespace File2BMP
             }
         }
 
-        static unsafe byte[] MakeBitmapFileHeader(uint fileSize)
+        static unsafe byte[] MakeBitmapFileHeader(ulong fileSize)
         {
             var header = new BitmapFileHeader
             {
                 bfType = 0x4D42,
                 bfSize = fileSize,
-                bfReserved1 = 0,
-                bfReserved2 = 0,
+                //bfReserved1 = 0,
+                //bfReserved2 = 0,
                 bfOffBits = 54,
             };
 
