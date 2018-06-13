@@ -16,7 +16,7 @@ Restore from BMP:
 ```
 
 ## Note
-This program will use `bfReserved1` and `bfReserved2` in the Bitmap Fie Header if convert source file size is bigger than 4.3GB (`uint.MaxValue`).  
+This program will use `bfReserved1` and `bfReserved2` in the Bitmap Fie Header if convert source file size is larger than 4.3GB (`uint.MaxValue`).  
 So now, we can support up to 9.2EB! (Maximum supported size of `Stream`.)
 
 Please note that this is not valid Bitmap file.
