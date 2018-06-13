@@ -1,5 +1,5 @@
 # File2BMP
-Convert any binary file to valid Bitmap file.
+Convert any binary file to valid Bitmap file.  
 https://ydkk.hateblo.jp/entry/2016/01/25/115224
 
 <img src="https://cdn-ak.f.st-hatena.com/images/fotolife/Y/YDKK/20180614/20180614024112.png">
